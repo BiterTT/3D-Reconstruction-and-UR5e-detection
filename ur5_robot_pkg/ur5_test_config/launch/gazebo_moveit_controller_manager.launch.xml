@@ -1,0 +1,13 @@
+<launch>
+  <!-- Define the MoveIt controller manager plugin to use for trajectory execution -->
+  <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
+
+  <!-- Load controller list to the parameter server -->
+  <rosparam file="$(find ur5_test_config)/config/gazebo_moveit.yaml" />
+
+  <!--  <arg name="moveit_controller_manager" default="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
+  <param name="moveit_controller_manager" value="gazebo_moveit_controller_manager"/>-->
+
+  <!--load controller_list-->
+  <!--<rosparam file="$(find ur5_test_config)/config/gazebo_moveit.yaml" />-->
+</launch>

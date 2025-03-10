@@ -1,0 +1,16 @@
+<!--<launch>-->
+	<!-- Define MoveIt controller manager plugin 
+	<param name="moveit_controller_manager" value="moveit_ros_control_interface::MoveItControllerManager" />
+</launch>
+
+
+<launch>-->
+
+  <!--Set the param that trajectory_execution_manager needs to find the controller plugin-->
+  <arg name="moveit_controller_manager" default="moveit_simple_controller_manager/MoveItSimpleControllerManager" />
+  <param name="moveit_controller_manager" value="$(arg moveit_controller_manager)"/>
+
+  <!--load controller_list-->
+  <rosparam file="$(find ur5_test_config)/config/controllers.yaml"/>
+
+</launch>

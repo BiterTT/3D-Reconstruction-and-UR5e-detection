@@ -1,0 +1,30 @@
+controller_manager_ns: ''
+#double planning group: controller_list
+controller_list:
+  - name: ur5_arm_controller
+    action_ns: follow_joint_trajectory
+    type: effort_controllers/JointTrajectoryController
+    default: true
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+    gains:
+      shoulder_pan_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+      shoulder_lift_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+      elbow_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+      wrist_1_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+      wrist_2_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+      wrist_3_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
+
+  - name: gripper_controller
+    action_ns: follow_joint_trajectory
+    type: effort_controllers/JointTrajectoryController
+    default: true
+    joints:
+      - robotiq_85_left_knuckle_joint
+    gains:
+      robotiq_85_left_knuckle_joint: {p: 100, d: 1, i: 1, i_clamp: 1}
