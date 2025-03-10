@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="roslaunch" type="roslaunch" name="wait_for_clock"
+        args="rosservice call /clock" />
+</launch>
