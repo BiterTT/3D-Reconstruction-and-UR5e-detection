@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Wait for Gazebo and controller_manager to be ready -->
+  <include file="$(find ur5_gazebo)/launch/wait_for_gazebo.launch" />
+
+  <!-- Load controllers -->
+  <exec command="rosservice call /controller_manager/load_controller 'name: joint_state_controller'" />
+  <exec command="rosservice call /controller_manager/load_controller 'name: ur5_arm_controller'" />
+  <exec command="rosservice call /controller_manager/load_controller 'name: gripper_controller'" />
+
+  <!-- Start controllers -->
+  <exec command="rosservice call /controller_manager/switch_controller '{
+          start_controllers: ['joint_state_controller', 'ur5_arm_controller', 'gripper_controller'],
+          stop_controllers: [],
+          strictness: 2
+        }'" />
+</launch>
