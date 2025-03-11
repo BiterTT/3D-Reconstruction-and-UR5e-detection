@@ -1,0 +1,48 @@
+ur5:
+  # 关节状态控制器（用于发布当前关节角度）
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  # 机械臂轨迹控制器（MoveIt! 运动控制）
+  ur5_arm_controller:
+    type: effort_controllers/JointTrajectoryController
+    default: true
+    action_ns: follow_joint_trajectory
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - elbow_joint
+      - wrist_1_joint
+      - wrist_2_joint
+      - wrist_3_joint
+    gains:
+      shoulder_pan_joint: {p: 20000, i: 200, d: 1, i_clamp: 100}
+      shoulder_lift_joint: {p: 20000, i: 200, d: 1, i_clamp: 100}
+      elbow_joint: {p: 20000, i: 200, d: 1, i_clamp: 100}
+      wrist_1_joint: {p: 20000, i: 200, d: 1, i_clamp: 100}
+      wrist_2_joint: {p: 20000, i: 200, d: 1, i_clamp: 100}
+      wrist_3_joint: {p: 20000, i: 200, d: 1, i_clamp: 100}
+    constraints:
+      goal_time: 2.0
+      stopped_velocity_tolerance: 0.0
+      shoulder_pan_joint: { goal_tolerance: 0.001, trajectory: 0.05 }
+      shoulder_lift_joint: { goal_tolerance: 0.001, trajectory: 0.05 }
+      elbow_joint: { goal_tolerance: 0.001, trajectory: 0.05 }
+      wrist_1_joint: { goal_tolerance: 0.001, trajectory: 0.05 }
+      wrist_2_joint: { goal_tolerance: 0.001, trajectory: 0.05 }
+      wrist_3_joint: { goal_tolerance: 0.001, trajectory: 0.05 }
+
+  # 夹爪控制器（用于控制 Robotiq 85 夹爪）
+  gripper_controller:
+    type: effort_controllers/JointTrajectoryController
+    default: true
+    action_ns: follow_joint_trajectory
+    joints:
+      - robotiq_85_left_knuckle_joint
+    gains:
+      robotiq_85_left_knuckle_joint: {p: 5, i: 0, d: 0, i_clamp: 1}
+    constraints:
+      goal_time: 2.0
+      stopped_velocity_tolerance: 0.001
+      robotiq_85_left_knuckle_joint: { goal_tolerance: 0.005, trajectory: 0.05 }

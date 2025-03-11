@@ -1,0 +1,51 @@
+<launch>
+  <!-- 使用 Gazebo 的模拟时间 -->
+  <param name="use_sim_time" value="true"/>
+
+  <!-- 加载 MoveIt! 的 `move_group` -->
+  <include file="$(find ur5_test_config)/launch/move_group.launch">
+    <!-- MoveIt! 需要使用 Gazebo 的 controller_manager -->
+    <arg name="moveit_controller_manager" value="simple" />  
+    <!-- 允许 MoveIt! 执行轨迹 -->
+    <arg name="allow_trajectory_execution" value="true"/>
+    <!-- 输出 MoveIt! 详细日志 -->
+    <arg name="info" value="true"/>  
+    <!-- 选择 MoveIt! 规划管道 ompl-->
+    <arg name="pipeline" value="ompl"/>
+    <!-- 避免重复加载 URDF（如果已加载） -->
+    <arg name="load_robot_description" value="false"/>
+
+    <arg name="debug" value="false"/> 
+    <!--让 MoveIt! 在 RViz 里显示 Gazebo 的世界模型，以便规划时考虑障碍物-->
+    <arg name="publish_monitored_planning_scene" value="true"/>
+    
+    <arg name="fake_execution_type" value=""/>
+
+  </include>
+
+  <!--The visualization component of MoveIt!-->
+  <include file="$(dirname)/moveit_rviz.launch" if="true">
+    <arg name="rviz_config" value="$(dirname)/moveit.rviz"/>
+    <arg name="debug" value="true"/>
+  </include>
+  <!--<include file="$(find ur5_test_config)/launch/moveit_rviz.launch">
+    <arg name="debug" value="false"/>
+  </include>-->
+
+  <!-- 确保 MoveIt! 使用 Gazebo 的控制器 -->
+  <rosparam file="$(find ur5_test_config)/config/ur5_control_moveit.yaml" command="load"/>
+
+  <!--<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+      <rosparam param="source_list">[/ur5/joint_states]</rosparam>
+  </node>-->
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+      <remap from="joint_states" to="/ur5/joint_states"/>
+  </node>
+
+  <!--The planning and execution components of MoveIt! configured to 
+      publish the current configuration of the robot (simulated or real) 
+      and the current state of the world as seen by the planner-->
+    <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
+
+</launch>
